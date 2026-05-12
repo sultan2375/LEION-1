@@ -4,20 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ✅ Monetag SDK -->
 <script src='//libtl.com/sdk.js' data-zone='10988983' data-sdk='show_10988983'></script>
-
-<!-- ✅ Telegram WebApp -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <title>LEION Reward App</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   background:linear-gradient(135deg,#020617,#0f172a,#111827);
@@ -29,45 +22,40 @@ body{
   position:relative;
 }
 
-/* Animated Dotted Power Lines */
-.power-lines{
+/* Glow Effect */
+body::before{
+  content:"";
   position:absolute;
-  width:100%;
-  height:100%;
-  overflow:hidden;
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle,#22c55e33,transparent 70%);
+  top:-100px;
+  left:-100px;
+  filter:blur(80px);
 }
 
+/* Lines */
+.power-lines{position:absolute;width:100%;height:100%;}
 .line{
   position:absolute;
   width:200%;
   height:2px;
-  background:repeating-linear-gradient(
-    90deg,
-    transparent 0px,
-    transparent 10px,
-    rgba(255,255,255,0.9) 10px,
-    rgba(255,255,255,0.9) 15px
-  );
+  background:repeating-linear-gradient(90deg,transparent 0px,transparent 10px,rgba(255,255,255,0.9) 10px,rgba(255,255,255,0.9) 15px);
   animation:move 5s linear infinite;
   opacity:0.7;
 }
-
-.line1{ top:20%; }
-.line2{ top:35%; animation-duration:4s; }
-.line3{ top:50%; animation-duration:6s; }
-.line4{ top:65%; animation-duration:4.5s; }
-.line5{ top:80%; animation-duration:5.5s; }
+.line1{top:20%;}
+.line2{top:35%;animation-duration:4s;}
+.line3{top:50%;animation-duration:6s;}
+.line4{top:65%;animation-duration:4.5s;}
+.line5{top:80%;animation-duration:5.5s;}
 
 @keyframes move{
-  from{
-    transform:translateX(-50%);
-  }
-  to{
-    transform:translateX(0%);
-  }
+  from{transform:translateX(-50%);}
+  to{transform:translateX(0%);}
 }
 
-/* Analog Clock */
+/* Clock */
 .clock{
   position:absolute;
   top:40px;
@@ -82,6 +70,15 @@ body{
   box-shadow:0 0 25px rgba(255,255,255,0.1);
 }
 
+.clock-text{
+  position:absolute;
+  top:-30px;
+  width:100%;
+  text-align:center;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
 .hand{
   position:absolute;
   bottom:50%;
@@ -90,24 +87,9 @@ body{
   transform:translateX(-50%);
   border-radius:20px;
 }
-
-.hour{
-  width:6px;
-  height:60px;
-  background:white;
-}
-
-.minute{
-  width:4px;
-  height:80px;
-  background:#d1d5db;
-}
-
-.second{
-  width:2px;
-  height:90px;
-  background:#22c55e;
-}
+.hour{width:6px;height:60px;background:white;}
+.minute{width:4px;height:80px;background:#d1d5db;}
+.second{width:2px;height:90px;background:#22c55e;}
 
 .center-dot{
   position:absolute;
@@ -120,33 +102,25 @@ body{
   transform:translate(-50%,-50%);
 }
 
-/* Logo */
-.logo{
-  position:absolute;
-  top:290px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.logo img{
-  width:240px;
-  max-width:90%;
-}
-
-/* Reward Box */
+/* Box */
 .box{
   position:absolute;
-  bottom:40px;
+  bottom:120px;
   left:50%;
   transform:translateX(-50%);
   width:350px;
-  background:rgba(30,41,59,0.7);
-  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
   padding:20px;
   border-radius:20px;
   text-align:center;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 0 30px rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 0 40px rgba(0,0,0,0.6);
+  transition:0.3s;
+}
+
+.box:hover{
+  transform:translateX(-50%) scale(1.02);
 }
 
 button{
@@ -155,56 +129,28 @@ button{
   margin-top:12px;
   border:none;
   border-radius:12px;
-  background:#22c55e;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
   color:white;
   font-weight:bold;
   cursor:pointer;
-  transition:0.3s;
+  box-shadow:0 0 15px #22c55e66;
 }
 
 button:hover{
-  transform:scale(1.03);
+  box-shadow:0 0 25px #22c55e;
 }
 
-.progress{
-  height:10px;
-  background:#334155;
-  margin-top:12px;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.fill{
-  height:100%;
-  background:#22c55e;
-  width:0%;
-  border-radius:10px;
-  transition:0.4s;
-}
-
-@media(max-width:600px){
-  .clock{
-    width:180px;
-    height:180px;
-  }
-
-  .logo{
-    top:250px;
-  }
-
-  .logo img{
-    width:180px;
-  }
-
-  .box{
-    width:90%;
-  }
+/* Counter */
+.counter{
+  font-size:22px;
+  font-weight:bold;
+  margin-top:5px;
 }
 </style>
 </head>
+
 <body>
 
-<!-- Power Lines -->
 <div class="power-lines">
   <div class="line line1"></div>
   <div class="line line2"></div>
@@ -213,66 +159,48 @@ button:hover{
   <div class="line line5"></div>
 </div>
 
-<!-- Analog Clock -->
 <div class="clock">
+  <div class="clock-text">CLOCK</div>
   <div class="hand hour" id="hour"></div>
   <div class="hand minute" id="minute"></div>
   <div class="hand second" id="second"></div>
   <div class="center-dot"></div>
 </div>
 
-<!-- Logo -->
-<div class="logo">
-  <img src="logo.png" alt="LEION Logo">
-</div>
-
-<!-- Original Reward Features -->
 <div class="box">
   <h2>Ad Reward</h2>
-
   <p id="user">Checking login...</p>
 
   <p>Ads: <span id="ads">0</span></p>
-  <p>Points: <span id="points">0</span></p>
 
-  <div class="progress">
-    <div class="fill" id="fill"></div>
-  </div>
+  <p>Points:</p>
+  <div class="counter" id="points">0</div>
 
   <button onclick="watchAd()">Watch Ad</button>
 </div>
 
 <script>
-/* Clock */
-const hour = document.getElementById('hour');
-const minute = document.getElementById('minute');
-const second = document.getElementById('second');
+const hour=document.getElementById('hour');
+const minute=document.getElementById('minute');
+const second=document.getElementById('second');
 
 function updateClock(){
-  const now = new Date();
+  const now=new Date();
+  const h=now.getHours();
+  const m=now.getMinutes();
+  const s=now.getSeconds();
 
-  const h = now.getHours();
-  const m = now.getMinutes();
-  const s = now.getSeconds();
-
-  const hDeg = (h % 12) * 30 + m * 0.5;
-  const mDeg = m * 6;
-  const sDeg = s * 6;
-
-  hour.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
-  minute.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
-  second.style.transform = `translateX(-50%) rotate(${sDeg}deg)`;
+  hour.style.transform=`translateX(-50%) rotate(${(h%12)*30+m*0.5}deg)`;
+  minute.style.transform=`translateX(-50%) rotate(${m*6}deg)`;
+  second.style.transform=`translateX(-50%) rotate(${s*6}deg)`;
 }
-
 setInterval(updateClock,1000);
 updateClock();
 
-/* Original Reward System */
-let ads = 0;
-let points = 0;
+let ads=0;
+let points=0;
 
-// Telegram Login
-let tg = window.Telegram.WebApp;
+let tg=window.Telegram.WebApp;
 tg.expand();
 
 if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
@@ -284,31 +212,36 @@ if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
     "❌ Open from Telegram Bot";
 }
 
-// Update UI
-function update() {
-  document.getElementById("ads").innerText = ads;
-  document.getElementById("points").innerText = points;
-  document.getElementById("fill").style.width = (ads % 100) + "%";
+function animateValue(id,start,end,duration){
+  let range=end-start;
+  let current=start;
+  let increment=end>start?1:-1;
+  let stepTime=Math.abs(Math.floor(duration/(range||1)));
+  let obj=document.getElementById(id);
+
+  let timer=setInterval(()=>{
+    current+=increment;
+    obj.innerText=current;
+    if(current==end) clearInterval(timer);
+  },stepTime);
 }
 
-// Watch Ad (Monetag)
-function watchAd() {
-  if (typeof show_10988983 === 'function') {
+function update(){
+  document.getElementById("ads").innerText=ads;
 
-    show_10988983().then(() => {
+  let current=parseInt(document.getElementById("points").innerText)||0;
+  animateValue("points",current,points,300);
+}
+
+function watchAd(){
+  if(typeof show_10988983==='function'){
+    show_10988983().then(()=>{
       ads++;
       points++;
-
-      if (ads % 2 === 0) {
-        points += 5;
-        alert("🎁 Bonus +5");
-      }
-
       update();
-    }).catch(() => {
+    }).catch(()=>{
       alert("Ad failed ❌");
     });
-
   } else {
     alert("SDK not loaded ❌");
   }
