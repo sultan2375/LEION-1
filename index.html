@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LEION Clock UI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ Monetag SDK -->
+<script src='//libtl.com/sdk.js' data-zone='10988983' data-sdk='show_10988983'></script>
+
+<!-- ✅ Telegram WebApp -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<title>LEION Reward App</title>
 
 <style>
 *{
@@ -13,48 +20,16 @@
 }
 
 body{
+  background:linear-gradient(135deg,#020617,#0f172a,#111827);
+  color:white;
+  font-family:Arial,sans-serif;
   width:100%;
   height:100vh;
   overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:Arial, sans-serif;
-  background:#000;
   position:relative;
 }
 
-/* Background Image */
-body::before{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:url('https://files.catbox.moe/6a7v0q.png') center center/cover no-repeat;
-  filter:brightness(0.45);
-  z-index:-3;
-}
-
-/* Dark Overlay */
-body::after{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.45);
-  z-index:-2;
-}
-
-.container{
-  position:relative;
-  width:100%;
-  height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* Power Lines */
+/* Animated Dotted Power Lines */
 .power-lines{
   position:absolute;
   width:100%;
@@ -64,111 +39,48 @@ body::after{
 
 .line{
   position:absolute;
+  width:200%;
   height:2px;
-  width:100%;
-  background:linear-gradient(90deg,
-  transparent,
-  rgba(255,255,255,0.1),
-  rgba(255,255,255,0.6),
-  rgba(255,255,255,1),
-  rgba(255,255,255,0.6),
-  transparent);
-  background-size:200px 100%;
-  animation:flow 2s linear infinite;
-  opacity:0.8;
-}
-
-.line::before{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
   background:repeating-linear-gradient(
     90deg,
     transparent 0px,
-    transparent 8px,
-    white 8px,
-    white 12px
+    transparent 10px,
+    rgba(255,255,255,0.9) 10px,
+    rgba(255,255,255,0.9) 15px
   );
+  animation:move 5s linear infinite;
+  opacity:0.7;
 }
 
-.line1{ top:20%; animation-duration:2s; }
-.line2{ top:35%; animation-duration:1.5s; }
-.line3{ top:50%; animation-duration:2.5s; }
-.line4{ top:65%; animation-duration:1.8s; }
-.line5{ top:80%; animation-duration:2.2s; }
+.line1{ top:20%; }
+.line2{ top:35%; animation-duration:4s; }
+.line3{ top:50%; animation-duration:6s; }
+.line4{ top:65%; animation-duration:4.5s; }
+.line5{ top:80%; animation-duration:5.5s; }
 
-@keyframes flow{
-  0%{
-    transform:translateX(-100%);
+@keyframes move{
+  from{
+    transform:translateX(-50%);
   }
-  100%{
-    transform:translateX(100%);
+  to{
+    transform:translateX(0%);
   }
 }
 
 /* Analog Clock */
 .clock{
   position:absolute;
-  top:60px;
-  width:240px;
-  height:240px;
+  top:40px;
+  left:50%;
+  transform:translateX(-50%);
+  width:220px;
+  height:220px;
+  border:8px solid rgba(255,255,255,0.15);
   border-radius:50%;
-  border:8px solid rgba(255,255,255,0.3);
   backdrop-filter:blur(10px);
-  background:rgba(0,0,0,0.35);
-  box-shadow:
-  0 0 25px rgba(255,255,255,0.15),
-  inset 0 0 20px rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  box-shadow:0 0 25px rgba(255,255,255,0.1);
 }
-
-.number{
-  position:absolute;
-  width:100%;
-  height:100%;
-  text-align:center;
-  color:white;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.number span{
-  display:block;
-  transform:translateY(12px);
-}
-
-.number1{ transform:rotate(30deg); }
-.number1 span{ transform:rotate(-30deg); }
-
-.number2{ transform:rotate(60deg); }
-.number2 span{ transform:rotate(-60deg); }
-
-.number3{ transform:rotate(90deg); }
-.number3 span{ transform:rotate(-90deg); }
-
-.number4{ transform:rotate(120deg); }
-.number4 span{ transform:rotate(-120deg); }
-
-.number5{ transform:rotate(150deg); }
-.number5 span{ transform:rotate(-150deg); }
-
-.number6{ transform:rotate(180deg); }
-.number6 span{ transform:rotate(-180deg); }
-
-.number7{ transform:rotate(210deg); }
-.number7 span{ transform:rotate(-210deg); }
-
-.number8{ transform:rotate(240deg); }
-.number8 span{ transform:rotate(-240deg); }
-
-.number9{ transform:rotate(270deg); }
-.number9 span{ transform:rotate(-270deg); }
-
-.number10{ transform:rotate(300deg); }
-.number10 span{ transform:rotate(-300deg); }
-
-.number11{ transform:rotate(330deg); }
-.number11 span{ transform:rotate(-330deg); }
 
 .hand{
   position:absolute;
@@ -176,108 +88,162 @@ body::after{
   left:50%;
   transform-origin:bottom;
   transform:translateX(-50%);
-  border-radius:10px;
+  border-radius:20px;
 }
 
 .hour{
-  width:7px;
-  height:65px;
+  width:6px;
+  height:60px;
   background:white;
 }
 
 .minute{
-  width:5px;
-  height:90px;
+  width:4px;
+  height:80px;
   background:#d1d5db;
 }
 
 .second{
   width:2px;
-  height:100px;
+  height:90px;
   background:#22c55e;
 }
 
 .center-dot{
   position:absolute;
-  width:16px;
-  height:16px;
-  background:white;
+  width:14px;
+  height:14px;
   border-radius:50%;
+  background:white;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  box-shadow:0 0 15px white;
 }
 
-.logo-box{
+/* Logo */
+.logo{
   position:absolute;
-  bottom:80px;
-  text-align:center;
+  top:290px;
+  left:50%;
+  transform:translateX(-50%);
 }
 
-.logo-box img{
-  width:320px;
+.logo img{
+  width:240px;
   max-width:90%;
-  filter:drop-shadow(0 0 20px rgba(255,255,255,0.2));
+}
+
+/* Reward Box */
+.box{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  width:350px;
+  background:rgba(30,41,59,0.7);
+  backdrop-filter:blur(12px);
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 30px rgba(0,0,0,0.5);
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:12px;
+  background:#22c55e;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.03);
+}
+
+.progress{
+  height:10px;
+  background:#334155;
+  margin-top:12px;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  background:#22c55e;
+  width:0%;
+  border-radius:10px;
+  transition:0.4s;
 }
 
 @media(max-width:600px){
   .clock{
-    width:200px;
-    height:200px;
-    top:40px;
+    width:180px;
+    height:180px;
   }
 
-  .logo-box img{
-    width:260px;
+  .logo{
+    top:250px;
+  }
+
+  .logo img{
+    width:180px;
+  }
+
+  .box{
+    width:90%;
   }
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<!-- Power Lines -->
+<div class="power-lines">
+  <div class="line line1"></div>
+  <div class="line line2"></div>
+  <div class="line line3"></div>
+  <div class="line line4"></div>
+  <div class="line line5"></div>
+</div>
 
-  <!-- Animated Power Lines -->
-  <div class="power-lines">
-    <div class="line line1"></div>
-    <div class="line line2"></div>
-    <div class="line line3"></div>
-    <div class="line line4"></div>
-    <div class="line line5"></div>
+<!-- Analog Clock -->
+<div class="clock">
+  <div class="hand hour" id="hour"></div>
+  <div class="hand minute" id="minute"></div>
+  <div class="hand second" id="second"></div>
+  <div class="center-dot"></div>
+</div>
+
+<!-- Logo -->
+<div class="logo">
+  <img src="logo.png" alt="LEION Logo">
+</div>
+
+<!-- Original Reward Features -->
+<div class="box">
+  <h2>Ad Reward</h2>
+
+  <p id="user">Checking login...</p>
+
+  <p>Ads: <span id="ads">0</span></p>
+  <p>Points: <span id="points">0</span></p>
+
+  <div class="progress">
+    <div class="fill" id="fill"></div>
   </div>
 
-  <!-- Analog Clock -->
-  <div class="clock">
-
-    <div class="number number1"><span>1</span></div>
-    <div class="number number2"><span>2</span></div>
-    <div class="number number3"><span>3</span></div>
-    <div class="number number4"><span>4</span></div>
-    <div class="number number5"><span>5</span></div>
-    <div class="number number6"><span>6</span></div>
-    <div class="number number7"><span>7</span></div>
-    <div class="number number8"><span>8</span></div>
-    <div class="number number9"><span>9</span></div>
-    <div class="number number10"><span>10</span></div>
-    <div class="number number11"><span>11</span></div>
-    <div class="number number12"><span>12</span></div>
-
-    <div class="hand hour" id="hour"></div>
-    <div class="hand minute" id="minute"></div>
-    <div class="hand second" id="second"></div>
-
-    <div class="center-dot"></div>
-  </div>
-
-  <!-- Logo -->
-  <div class="logo-box">
-    <img src="https://files.catbox.moe/6a7v0q.png" alt="LEION Logo">
-  </div>
-
+  <button onclick="watchAd()">Watch Ad</button>
 </div>
 
 <script>
+/* Clock */
 const hour = document.getElementById('hour');
 const minute = document.getElementById('minute');
 const second = document.getElementById('second');
@@ -285,22 +251,71 @@ const second = document.getElementById('second');
 function updateClock(){
   const now = new Date();
 
-  const hr = now.getHours();
-  const min = now.getMinutes();
-  const sec = now.getSeconds();
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const s = now.getSeconds();
 
-  const hrDeg = (hr % 12) * 30 + min * 0.5;
-  const minDeg = min * 6;
-  const secDeg = sec * 6;
+  const hDeg = (h % 12) * 30 + m * 0.5;
+  const mDeg = m * 6;
+  const sDeg = s * 6;
 
-  hour.style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
-  minute.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
-  second.style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+  hour.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
+  minute.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+  second.style.transform = `translateX(-50%) rotate(${sDeg}deg)`;
 }
 
 setInterval(updateClock,1000);
 updateClock();
+
+/* Original Reward System */
+let ads = 0;
+let points = 0;
+
+// Telegram Login
+let tg = window.Telegram.WebApp;
+tg.expand();
+
+if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+  let user = tg.initDataUnsafe.user;
+  document.getElementById("user").innerText =
+    "👤 " + user.first_name + " (" + user.id + ")";
+} else {
+  document.getElementById("user").innerText =
+    "❌ Open from Telegram Bot";
+}
+
+// Update UI
+function update() {
+  document.getElementById("ads").innerText = ads;
+  document.getElementById("points").innerText = points;
+  document.getElementById("fill").style.width = (ads % 100) + "%";
+}
+
+// Watch Ad (Monetag)
+function watchAd() {
+  if (typeof show_10988983 === 'function') {
+
+    show_10988983().then(() => {
+      ads++;
+      points++;
+
+      if (ads % 2 === 0) {
+        points += 5;
+        alert("🎁 Bonus +5");
+      }
+
+      update();
+    }).catch(() => {
+      alert("Ad failed ❌");
+    });
+
+  } else {
+    alert("SDK not loaded ❌");
+  }
+}
+
+update();
 </script>
 
 </body>
-      </html>
+</html>
