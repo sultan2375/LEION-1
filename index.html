@@ -13,46 +13,11 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  background:linear-gradient(135deg,#020617,#0f172a,#111827);
+  background:#020617;
   color:white;
-  font-family:Arial,sans-serif;
-  width:100%;
+  font-family:Arial;
   height:100vh;
   overflow:hidden;
-  position:relative;
-}
-
-/* Glow Effect */
-body::before{
-  content:"";
-  position:absolute;
-  width:400px;
-  height:400px;
-  background:radial-gradient(circle,#22c55e33,transparent 70%);
-  top:-100px;
-  left:-100px;
-  filter:blur(80px);
-}
-
-/* Lines */
-.power-lines{position:absolute;width:100%;height:100%;}
-.line{
-  position:absolute;
-  width:200%;
-  height:2px;
-  background:repeating-linear-gradient(90deg,transparent 0px,transparent 10px,rgba(255,255,255,0.9) 10px,rgba(255,255,255,0.9) 15px);
-  animation:move 5s linear infinite;
-  opacity:0.7;
-}
-.line1{top:20%;}
-.line2{top:35%;animation-duration:4s;}
-.line3{top:50%;animation-duration:6s;}
-.line4{top:65%;animation-duration:4.5s;}
-.line5{top:80%;animation-duration:5.5s;}
-
-@keyframes move{
-  from{transform:translateX(-50%);}
-  to{transform:translateX(0%);}
 }
 
 /* Clock */
@@ -61,42 +26,41 @@ body::before{
   top:40px;
   left:50%;
   transform:translateX(-50%);
-  width:220px;
-  height:220px;
-  border:8px solid rgba(255,255,255,0.15);
+  width:240px;
+  height:240px;
   border-radius:50%;
-  backdrop-filter:blur(10px);
-  background:rgba(255,255,255,0.04);
-  box-shadow:0 0 25px rgba(255,255,255,0.1);
+  border:3px solid #22c55e;
+  box-shadow:0 0 30px #22c55e55, inset 0 0 20px #22c55e22;
 }
 
-.clock-text{
+/* Numbers circle */
+.number{
   position:absolute;
-  top:-30px;
-  width:100%;
-  text-align:center;
-  font-weight:bold;
-  letter-spacing:2px;
+  left:50%;
+  top:50%;
+  transform-origin:0 0;
+  font-size:14px;
+  color:#22c55e;
 }
 
+/* Hands */
 .hand{
   position:absolute;
   bottom:50%;
   left:50%;
   transform-origin:bottom;
   transform:translateX(-50%);
-  border-radius:20px;
 }
-.hour{width:6px;height:60px;background:white;}
-.minute{width:4px;height:80px;background:#d1d5db;}
-.second{width:2px;height:90px;background:#22c55e;}
+.hour{width:5px;height:60px;background:white;}
+.minute{width:3px;height:85px;background:#ccc;}
+.second{width:2px;height:100px;background:#22c55e;}
 
 .center-dot{
   position:absolute;
-  width:14px;
-  height:14px;
+  width:10px;
+  height:10px;
+  background:#22c55e;
   border-radius:50%;
-  background:white;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
@@ -105,7 +69,7 @@ body::before{
 /* Box */
 .box{
   position:absolute;
-  bottom:120px;
+  bottom:100px;
   left:50%;
   transform:translateX(-50%);
   width:350px;
@@ -114,13 +78,6 @@ body::before{
   padding:20px;
   border-radius:20px;
   text-align:center;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 40px rgba(0,0,0,0.6);
-  transition:0.3s;
-}
-
-.box:hover{
-  transform:translateX(-50%) scale(1.02);
 }
 
 button{
@@ -129,43 +86,31 @@ button{
   margin-top:12px;
   border:none;
   border-radius:12px;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
+  background:#22c55e;
   color:white;
   font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 0 15px #22c55e66;
+  box-shadow:0 0 15px #22c55e88;
 }
 
-button:hover{
-  box-shadow:0 0 25px #22c55e;
-}
-
-/* Counter */
 .counter{
   font-size:22px;
   font-weight:bold;
-  margin-top:5px;
+}
+
+/* History */
+.history{
+  margin-top:10px;
+  font-size:12px;
+  text-align:left;
+  max-height:80px;
+  overflow:auto;
 }
 </style>
 </head>
 
 <body>
 
-<div class="power-lines">
-  <div class="line line1"></div>
-  <div class="line line2"></div>
-  <div class="line line3"></div>
-  <div class="line line4"></div>
-  <div class="line line5"></div>
-</div>
-
-<div class="clock">
-  <div class="clock-text">CLOCK</div>
-  <div class="hand hour" id="hour"></div>
-  <div class="hand minute" id="minute"></div>
-  <div class="hand second" id="second"></div>
-  <div class="center-dot"></div>
-</div>
+<div class="clock" id="clock"></div>
 
 <div class="box">
   <h2>Ad Reward</h2>
@@ -177,13 +122,27 @@ button:hover{
   <div class="counter" id="points">0</div>
 
   <button onclick="watchAd()">Watch Ad</button>
+
+  <div class="history" id="history"></div>
 </div>
 
 <script>
-const hour=document.getElementById('hour');
-const minute=document.getElementById('minute');
-const second=document.getElementById('second');
+/* Create 1-12 numbers */
+const clock=document.getElementById("clock");
+for(let i=1;i<=12;i++){
+  let num=document.createElement("div");
+  num.className="number";
+  num.innerText=i;
 
+  let angle=(i*30)*Math.PI/180;
+  let r=100;
+
+  num.style.transform=`translate(-50%,-50%) translate(${Math.sin(angle)*r}px,${-Math.cos(angle)*r}px)`;
+
+  clock.appendChild(num);
+}
+
+/* Clock */
 function updateClock(){
   const now=new Date();
   const h=now.getHours();
@@ -194,56 +153,54 @@ function updateClock(){
   minute.style.transform=`translateX(-50%) rotate(${m*6}deg)`;
   second.style.transform=`translateX(-50%) rotate(${s*6}deg)`;
 }
+
+/* Add hands */
+clock.innerHTML+=`
+<div class="hand hour" id="hour"></div>
+<div class="hand minute" id="minute"></div>
+<div class="hand second" id="second"></div>
+<div class="center-dot"></div>
+`;
+
 setInterval(updateClock,1000);
 updateClock();
 
+/* Data */
 let ads=0;
 let points=0;
 
+/* History */
+function addHistory(text){
+  let h=document.getElementById("history");
+  let time=new Date().toLocaleTimeString();
+  h.innerHTML=`<div>+1 coin (${time})</div>`+h.innerHTML;
+}
+
+/* Telegram */
 let tg=window.Telegram.WebApp;
 tg.expand();
 
 if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
   let user = tg.initDataUnsafe.user;
   document.getElementById("user").innerText =
-    "👤 " + user.first_name + " (" + user.id + ")";
-} else {
-  document.getElementById("user").innerText =
-    "❌ Open from Telegram Bot";
+    "👤 " + user.first_name;
 }
 
-function animateValue(id,start,end,duration){
-  let range=end-start;
-  let current=start;
-  let increment=end>start?1:-1;
-  let stepTime=Math.abs(Math.floor(duration/(range||1)));
-  let obj=document.getElementById(id);
-
-  let timer=setInterval(()=>{
-    current+=increment;
-    obj.innerText=current;
-    if(current==end) clearInterval(timer);
-  },stepTime);
-}
-
+/* Update */
 function update(){
   document.getElementById("ads").innerText=ads;
-
-  let current=parseInt(document.getElementById("points").innerText)||0;
-  animateValue("points",current,points,300);
+  document.getElementById("points").innerText=points;
 }
 
+/* Ad */
 function watchAd(){
   if(typeof show_10988983==='function'){
     show_10988983().then(()=>{
       ads++;
       points++;
+      addHistory();
       update();
-    }).catch(()=>{
-      alert("Ad failed ❌");
     });
-  } else {
-    alert("SDK not loaded ❌");
   }
 }
 
