@@ -94,61 +94,63 @@ body::after{
   left:50%;
 }
 
-/* Snake Animation */
-.snake{
-  position:absolute;
-  bottom:40px;
-  left:-250px;
-  width:200px;
-  height:20px;
-  background:linear-gradient(90deg,#22c55e,#4ade80);
-  border-radius:20px;
-  box-shadow:0 0 20px #22c55e;
-  animation:snakeMove 10s linear infinite;
-  z-index:1;
-}
-
-@keyframes snakeMove{
-  0%{
-    left:-250px;
-  }
-  100%{
-    left:120%;
-  }
-}
-
-/* Horse Animation */
-.horse{
-  position:absolute;
-  bottom:90px;
-  right:-150px;
-  font-size:60px;
-  animation:horseRun 8s linear infinite;
-  z-index:1;
-}
-
-@keyframes horseRun{
-  0%{
-    right:-200px;
-  }
-  100%{
-    right:120%;
-  }
-}
-
 /* Analog Clock */
+
 .clock{
   position:absolute;
   top:20px;
-  width:140px;
-  height:140px;
+  width:150px;
+  height:150px;
   border:5px solid rgba(255,255,255,0.2);
   border-radius:50%;
   backdrop-filter:blur(10px);
   background:rgba(255,255,255,0.05);
   z-index:5;
-  box-shadow:0 0 30px rgba(0,255,255,0.2);
+  box-shadow:0 0 30px rgba(0,255,255,0.3);
 }
+
+/* Clock Numbers */
+
+.number{
+  position:absolute;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  text-shadow:0 0 10px #00ffff;
+}
+
+.n1{top:12px; right:38px;}
+.n2{top:35px; right:12px;}
+.n3{top:58px; right:5px;}
+.n4{bottom:35px; right:12px;}
+.n5{bottom:12px; right:38px;}
+.n6{bottom:5px; left:50%; transform:translateX(-50%);}
+.n7{bottom:12px; left:38px;}
+.n8{bottom:35px; left:12px;}
+.n9{top:58px; left:5px;}
+.n10{top:35px; left:8px;}
+.n11{top:12px; left:32px;}
+.n12{
+  top:2px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* Center Dot */
+
+.center-dot{
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:#00ffff;
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 15px #00ffff;
+}
+
+/* Clock Hands */
 
 .hand{
   position:absolute;
@@ -178,6 +180,7 @@ body::after{
 }
 
 /* Main Box */
+
 .box{
   width:360px;
   padding:25px;
@@ -191,6 +194,7 @@ body::after{
 }
 
 /* Display */
+
 .display{
   background:#020617;
   border-radius:20px;
@@ -218,6 +222,7 @@ body::after{
 }
 
 /* Button */
+
 button{
   width:100%;
   padding:15px;
@@ -282,17 +287,28 @@ button:hover{
 <div class="neon-circle c2"></div>
 <div class="neon-circle c3"></div>
 
-<!-- Snake -->
-<div class="snake"></div>
-
-<!-- Horse -->
-<div class="horse">🐎</div>
-
 <!-- Analog Clock -->
 <div class="clock">
+
+  <div class="number n1">1</div>
+  <div class="number n2">2</div>
+  <div class="number n3">3</div>
+  <div class="number n4">4</div>
+  <div class="number n5">5</div>
+  <div class="number n6">6</div>
+  <div class="number n7">7</div>
+  <div class="number n8">8</div>
+  <div class="number n9">9</div>
+  <div class="number n10">10</div>
+  <div class="number n11">11</div>
+  <div class="number n12">12</div>
+
+  <div class="center-dot"></div>
+
   <div class="hand hour" id="hour"></div>
   <div class="hand minute" id="minute"></div>
   <div class="hand second" id="second"></div>
+
 </div>
 
 <!-- Main Card -->
@@ -331,6 +347,7 @@ button:hover{
 <script>
 
 /* Telegram */
+
 let tg = window.Telegram.WebApp;
 tg.expand();
 
