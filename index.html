@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<script src='//libtl.com/sdk.js' data-zone='10996602' data-sdk='show_10996602'></script>
+<!-- Monetag SDK -->
+<script
+src="https://libtl.com/sdk.js"
+data-zone="10996602"
+data-sdk="show_10996602">
+</script>
+
+<!-- Telegram -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <title>LEION Reward App</title>
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -18,64 +26,64 @@
 
 body{
   background:
-    radial-gradient(circle at top,#052b18 0%,#01040c 35%,#000000 100%);
+  radial-gradient(circle at top,#06361d 0%,#01040c 35%,#000000 100%);
   color:white;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   height:100vh;
   overflow:hidden;
   position:relative;
 }
 
-/* Floating glow particles */
+/* Background particles */
 body::before{
   content:"";
   position:absolute;
   width:100%;
   height:100%;
   background-image:
-    radial-gradient(#22c55e66 1px, transparent 1px);
+  radial-gradient(#22ff6650 1px,transparent 1px);
   background-size:35px 35px;
-  opacity:0.2;
+  opacity:0.25;
   pointer-events:none;
 }
 
-/* Snake Left */
+/* Snakes */
 .snake-left{
   position:absolute;
   left:-40px;
-  top:140px;
-  width:180px;
-  opacity:0.9;
-  filter:drop-shadow(0 0 12px #22c55e);
-  transform:rotate(-10deg);
+  top:150px;
+  width:150px;
+  opacity:0.25;
+  filter:drop-shadow(0 0 15px #22ff66);
 }
 
-/* Snake Right */
 .snake-right{
   position:absolute;
-  right:-30px;
-  bottom:120px;
-  width:180px;
-  opacity:0.9;
-  filter:drop-shadow(0 0 12px #22c55e);
-  transform:rotate(12deg);
+  right:-40px;
+  bottom:130px;
+  width:150px;
+  opacity:0.25;
+  transform:rotate(180deg);
+  filter:drop-shadow(0 0 15px #22ff66);
 }
 
-/* Clock */
+/* CLOCK */
 .clock{
   position:absolute;
-  top:80px;
+  top:65px;
   left:50%;
   transform:translateX(-50%);
-  width:270px;
-  height:270px;
+  width:220px;
+  height:220px;
   border-radius:50%;
   border:4px solid #22ff66;
+
+  background:rgba(0,0,0,0.2);
+
   box-shadow:
-    0 0 20px #22ff66,
-    0 0 60px #22ff6644,
-    inset 0 0 20px #22ff6633;
-  background:rgba(0,0,0,0.15);
+  0 0 20px #22ff66,
+  0 0 50px #22ff6650,
+  inset 0 0 20px #22ff6620;
 }
 
 /* Clock Numbers */
@@ -84,13 +92,13 @@ body::before{
   left:50%;
   top:50%;
   transform-origin:0 0;
-  font-size:18px;
+  font-size:16px;
   font-weight:bold;
   color:#22ff66;
   text-shadow:0 0 10px #22ff66;
 }
 
-/* Clock Hands */
+/* Hands */
 .hand{
   position:absolute;
   bottom:50%;
@@ -102,19 +110,19 @@ body::before{
 
 .hour{
   width:6px;
-  height:65px;
+  height:55px;
   background:white;
 }
 
 .minute{
   width:4px;
-  height:95px;
+  height:78px;
   background:#d1d5db;
 }
 
 .second{
   width:3px;
-  height:110px;
+  height:95px;
   background:#22ff66;
   box-shadow:0 0 12px #22ff66;
 }
@@ -131,195 +139,230 @@ body::before{
   box-shadow:0 0 15px #22ff66;
 }
 
-/* Main Glass Box */
+/* Main Box */
 .box{
   position:absolute;
-  bottom:90px;
+  bottom:40px;
   left:50%;
   transform:translateX(-50%);
-  width:360px;
-  padding:25px;
-  border-radius:28px;
-  text-align:center;
+  width:340px;
 
-  background:rgba(255,255,255,0.04);
-  border:2px solid rgba(34,255,102,0.45);
+  padding:24px;
+  border-radius:30px;
 
-  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,0.03);
+
+  border:2px solid rgba(34,255,102,0.4);
+
+  backdrop-filter:blur(20px);
 
   box-shadow:
-    0 0 25px rgba(34,255,102,0.25),
-    inset 0 0 12px rgba(255,255,255,0.04);
+  0 0 25px rgba(34,255,102,0.2),
+  inset 0 0 15px rgba(255,255,255,0.03);
+
+  text-align:center;
 }
 
+/* Logo */
 .logo{
-  font-size:42px;
+  font-size:52px;
   font-weight:900;
+  margin-bottom:8px;
   letter-spacing:2px;
-  margin-bottom:5px;
 }
 
+/* User */
 .user{
-  color:#d1d5db;
-  margin-bottom:20px;
   font-size:18px;
+  color:#d1d5db;
+  margin-bottom:25px;
 }
 
+/* Row */
 .row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:18px 0;
-  font-size:20px;
-  padding-bottom:14px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
 
-.row:last-child{
-  border:none;
+  padding:18px 0;
+
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .left{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:18px;
+
+  font-size:20px;
   letter-spacing:8px;
 }
 
+/* Icon */
 .icon{
-  width:42px;
-  height:42px;
+  width:48px;
+  height:48px;
+
   border:2px solid #22ff66;
-  border-radius:12px;
+  border-radius:14px;
+
   display:flex;
   justify-content:center;
   align-items:center;
+
   color:#22ff66;
-  font-size:20px;
-  box-shadow:0 0 10px #22ff6655;
+  font-size:24px;
+
+  box-shadow:0 0 12px #22ff6650;
 }
 
+/* Value */
 .value{
-  font-size:28px;
-  color:#22ff66;
+  font-size:30px;
   font-weight:bold;
+  color:#22ff66;
 }
 
 /* Button */
 button{
   width:100%;
-  padding:18px;
-  margin-top:20px;
+  margin-top:28px;
+  padding:20px;
+
   border:none;
-  border-radius:18px;
-  background:linear-gradient(to bottom,#30ff72,#18b64d);
+  border-radius:20px;
+
+  background:
+  linear-gradient(to bottom,#3dff7f,#18b64d);
+
   color:white;
-  font-size:28px;
+  font-size:24px;
   font-weight:bold;
+
   cursor:pointer;
 
   box-shadow:
-    0 0 18px #22ff66aa,
-    inset 0 2px 10px rgba(255,255,255,0.3);
+  0 0 25px #22ff6680,
+  inset 0 2px 10px rgba(255,255,255,0.25);
 
   transition:0.2s;
 }
 
 button:active{
-  transform:scale(0.98);
+  transform:scale(0.97);
 }
 
 /* History */
 .history{
   margin-top:18px;
-  max-height:80px;
+  max-height:70px;
   overflow:auto;
-  font-size:12px;
   text-align:left;
+  font-size:12px;
   color:#cbd5e1;
 }
 
 .history div{
   margin-bottom:6px;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- Snake SVG Left -->
+<!-- Snake -->
 <img class="snake-left"
 src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Snake_icon.svg/512px-Snake_icon.svg.png">
 
-<!-- Snake SVG Right -->
 <img class="snake-right"
 src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Snake_icon.svg/512px-Snake_icon.svg.png">
 
 <!-- CLOCK -->
 <div class="clock" id="clock"></div>
 
-<!-- GLASS BOX -->
+<!-- BOX -->
 <div class="box">
 
   <div class="logo">LEION</div>
 
-  <div class="user" id="user">Checking login...</div>
+  <div class="user" id="user">
+    Checking login...
+  </div>
 
+  <!-- ADS -->
   <div class="row">
+
     <div class="left">
       <div class="icon">▶</div>
       <span>ADS</span>
     </div>
 
     <div class="value" id="ads">0</div>
+
   </div>
 
+  <!-- POINTS -->
   <div class="row">
+
     <div class="left">
       <div class="icon">★</div>
       <span>POINTS</span>
     </div>
 
     <div class="value" id="points">0</div>
+
   </div>
 
-  <button onclick="watchAd()">▶ Watch Ad</button>
+  <!-- BUTTON -->
+  <button onclick="watchAd()">
+    ▶ Watch Ad
+  </button>
 
+  <!-- History -->
   <div class="history" id="history"></div>
 
 </div>
 
 <script>
-/* CLOCK NUMBERS */
+
+/* CLOCK */
 const clock = document.getElementById("clock");
 
+/* Numbers */
 for(let i=1;i<=12;i++){
 
-  let num=document.createElement("div");
+  let num = document.createElement("div");
 
-  num.className="number";
-  num.innerText=i;
+  num.className = "number";
+  num.innerText = i;
 
-  let angle=(i*30)*Math.PI/180;
-  let r=115;
+  let angle = (i*30) * Math.PI/180;
 
-  num.style.transform=
-    `translate(-50%,-50%)
-    translate(${Math.sin(angle)*r}px,
-    ${-Math.cos(angle)*r}px)`;
+  let r = 92;
+
+  num.style.transform =
+  `translate(-50%,-50%)
+  translate(${Math.sin(angle)*r}px,
+  ${-Math.cos(angle)*r}px)`;
 
   clock.appendChild(num);
 }
 
-/* HANDS */
+/* Hands */
 clock.innerHTML += `
+
 <div class="hand hour" id="hour"></div>
+
 <div class="hand minute" id="minute"></div>
+
 <div class="hand second" id="second"></div>
+
 <div class="center-dot"></div>
+
 `;
 
-/* CLOCK UPDATE */
+/* Update Clock */
 function updateClock(){
 
   const now = new Date();
@@ -329,16 +372,20 @@ function updateClock(){
   const s = now.getSeconds();
 
   document.getElementById("hour").style.transform =
-    `translateX(-50%) rotate(${(h%12)*30 + m*0.5}deg)`;
+  `translateX(-50%)
+  rotate(${(h%12)*30 + m*0.5}deg)`;
 
   document.getElementById("minute").style.transform =
-    `translateX(-50%) rotate(${m*6}deg)`;
+  `translateX(-50%)
+  rotate(${m*6}deg)`;
 
   document.getElementById("second").style.transform =
-    `translateX(-50%) rotate(${s*6}deg)`;
+  `translateX(-50%)
+  rotate(${s*6}deg)`;
 }
 
 setInterval(updateClock,1000);
+
 updateClock();
 
 /* DATA */
@@ -361,45 +408,56 @@ function addHistory(){
   let time = new Date().toLocaleTimeString();
 
   h.innerHTML =
-    `<div>+1 coin earned (${time})</div>` +
-    h.innerHTML;
+  `<div>+1 Coin Earned (${time})</div>`
+  + h.innerHTML;
 }
 
-/* TELEGRAM */
+/* Telegram */
 let tg = window.Telegram.WebApp;
 
 tg.expand();
 
-if(tg.initDataUnsafe && tg.initDataUnsafe.user){
+if(tg.initDataUnsafe &&
+   tg.initDataUnsafe.user){
 
-  let user = tg.initDataUnsafe.user;
+   let user = tg.initDataUnsafe.user;
 
-  document.getElementById("user").innerText =
-    "👤 " + user.first_name;
+   document.getElementById("user").innerHTML =
+   "👤 " + user.first_name;
 }
 
 /* WATCH AD */
-function watchAd(){
+async function watchAd(){
 
-  if(typeof show_10996602 === 'function'){
+  try{
 
-    show_10996602().then(()=>{
+    if(typeof show_10996602 !== "function"){
 
-      ads++;
-      points++;
+      alert("Ad SDK failed to load");
 
-      addHistory();
+      return;
+    }
 
-      update();
-    });
+    await show_10996602();
 
-  }else{
+    ads++;
+    points++;
 
-    alert("Ad SDK not loaded.");
+    addHistory();
+
+    update();
+
+  }catch(err){
+
+    console.log(err);
+
+    alert("Ad skipped or failed");
+
   }
 }
 
 update();
+
 </script>
 
 </body>
