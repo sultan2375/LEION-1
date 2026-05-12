@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- ✅ Telegram FIRST -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<title>LEION Reward App</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:
+  radial-gradient(circle at top,#06361d 0%,#01040c 35%,#000000 100%);
+  color:white;
+  font-family:Arial,sans-serif;
+  height:100vh;
+  overflow:hidden;
+  position:relative;
+}
+
+body::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image:radial-gradient(#22ff6650 1px,transparent 1px);
+  background-size:35px 35px;
+  opacity:0.25;
+  pointer-events:none;
+}
+
+.snake-left{
+  position:absolute;
+  left:-40px;
+  top:150px;
+  width:150px;
+  opacity:0.25;
+  filter:drop-shadow(0 0 15px #22ff66);
+}
+
+.snake-right{
+  position:absolute;
+  right:-40px;
+  bottom:130px;
+  width:150px;
+  opacity:0.25;
+  transform:rotate(180deg);
+  filter:drop-shadow(0 0 15px #22ff66);
+}
+
+/* CLOCK */
+.clock{
+  position:absolute;
+  top:65px;
+  left:50%;
+  transform:translateX(-50%);
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  border:4px solid #22ff66;
+  background:rgba(0,0,0,0.2);
+  box-shadow:
+    0 0 20px #22ff66,
+    0 0 50px #22ff6650,
+    inset 0 0 20px #22ff6620;
+}
+
+.number{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform-origin:0 0;
+  font-size:16px;
+  font-weight:bold;
+  color:#22ff66;
+  text-shadow:0 0 10px #22ff66;
+}
+
+.hand{
+  position:absolute;
+  bottom:50%;
+  left:50%;
+  transform-origin:bottom;
+  transform:translateX(-50%);
+  border-radius:10px;
+}
+
+.hour{
+  width:6px;
+  height:55px;
+  background:white;
+}
+
+.minute{
+  width:4px;
+  height:78px;
+  background:#d1d5db;
+}
+
+.second{
+  width:3px;
+  height:95px;
+  background:#22ff66;
+  box-shadow:0 0 12px #22ff66;
+}
+
+.center-dot{
+  position:absolute;
+  width:18px;
+  height:18px;
+  background:#22ff66;
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 15px #22ff66;
+}
+
+/* Main Box */
+.box{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  width:340px;
+  padding:24px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.03);
+  border:2px solid rgba(34,255,102,0.4);
+  backdrop-filter:blur(20px);
+  box-shadow:
+    0 0 25px rgba(34,255,102,0.2),
+    inset 0 0 15px rgba(255,255,255,0.03);
+  text-align:center;
+}
+
+.logo{
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:8px;
+  letter-spacing:2px;
+}
+
+.user{
+  font-size:18px;
+  color:#d1d5db;
+  margin-bottom:25px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  font-size:20px;
+  letter-spacing:8px;
+}
+
+.icon{
+  width:48px;
+  height:48px;
+  border:2px solid #22ff66;
+  border-radius:14px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#22ff66;
+  font-size:24px;
+  box-shadow:0 0 12px #22ff6650;
+}
+
+.value{
+  font-size:30px;
+  font-weight:bold;
+  color:#22ff66;
+}
+
+button{
+  width:100%;
+  margin-top:28px;
+  padding:20px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(to bottom,#3dff7f,#18b64d);
+  color:white;
+  font-size:24px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:
+    0 0 25px #22ff6680,
+    inset 0 2px 10px rgba(255,255,255,0.25);
+  transition:0.2s;
+}
+
+button:active{
+  transform:scale(0.97);
+}
+
+button:disabled{
+  background:linear-gradient(to bottom,#2a4a35,#1a2e22);
+  box-shadow:none;
+  cursor:not-allowed;
+  opacity:0.7;
+}
+
+#status{
+  margin-top:10px;
+  font-size:12px;
+  color:#6b7280;
+  min-height:16px;
+}
+
+.history{
+  margin-top:18px;
+  max-height:70px;
+  overflow:auto;
+  text-align:left;
+  font-size:12px;
+  color:#cbd5e1;
+}
+
+.history div{
+  margin-bottom:6px;
+}
+</style>
+</head>
+
+<body>
+
+<img class="snake-left"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Snake_icon.svg/512px-Snake_icon.svg.png">
+
+<img class="snake-right"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Snake_icon.svg/512px-Snake_icon.svg.png">
+
+<!-- CLOCK -->
+<div class="clock" id="clock"></div>
+
+<!-- BOX -->
+<div class="box">
+
+  <div class="logo">LEION</div>
+
+  <div class="user" id="user">Checking login...</div>
+
+  <div class="row">
+    <div class="left">
+      <div class="icon">▶</div>
+      <span>ADS</span>
+    </div>
+    <div class="value" id="ads">0</div>
+  </div>
+
+  <div class="row">
+    <div class="left">
+      <div class="icon">★</div>
+      <span>POINTS</span>
+    </div>
+    <div class="value" id="points">0</div>
+  </div>
+
+  <button id="adBtn" onclick="watchAd()" disabled>⏳ Loading...</button>
+
+  <div id="status">Ad SDK লোড হচ্ছে...</div>
+
+  <div class="history" id="history"></div>
+
+</div>
+
+<script>
+
+/* ── CLOCK ── */
+const clock = document.getElementById("clock");
+
+for(let i = 1; i <= 12; i++){
+  let num = document.createElement("div");
+  num.className = "number";
+  num.innerText = i;
+  let angle = (i * 30) * Math.PI / 180;
+  let r = 92;
+  num.style.transform =
+    `translate(-50%,-50%) translate(${Math.sin(angle)*r}px,${-Math.cos(angle)*r}px)`;
+  clock.appendChild(num);
+}
+
+clock.innerHTML += `
+  <div class="hand hour"   id="hour"></div>
+  <div class="hand minute" id="minute"></div>
+  <div class="hand second" id="second"></div>
+  <div class="center-dot"></div>
+`;
+
+function updateClock(){
+  const now = new Date();
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const s = now.getSeconds();
+  document.getElementById("hour").style.transform =
+    `translateX(-50%) rotate(${(h%12)*30 + m*0.5}deg)`;
+  document.getElementById("minute").style.transform =
+    `translateX(-50%) rotate(${m*6}deg)`;
+  document.getElementById("second").style.transform =
+    `translateX(-50%) rotate(${s*6}deg)`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* ── DATA ── */
+let ads    = 0;
+let points = 0;
+let adBusy = false;
+
+const ZONE   = "10988983";
+const SDK_FN = "show_" + ZONE;
+
+/* ── TELEGRAM ── */
+const tg = window.Telegram?.WebApp;
+if(tg){
+  tg.expand();
+  const u = tg.initDataUnsafe?.user;
+  document.getElementById("user").innerHTML =
+    u ? "👤 " + u.first_name : "👤 Guest";
+} else {
+  document.getElementById("user").innerHTML = "👤 Guest";
+}
+
+/* ── UI HELPERS ── */
+function update(){
+  document.getElementById("ads").innerText    = ads;
+  document.getElementById("points").innerText = points;
+}
+
+function setStatus(msg){
+  document.getElementById("status").innerText = msg;
+}
+
+function setBtn(on, label){
+  const b = document.getElementById("adBtn");
+  b.disabled  = !on;
+  b.innerText = label;
+}
+
+function addHistory(msg){
+  const h    = document.getElementById("history");
+  const time = new Date().toLocaleTimeString();
+  h.innerHTML = `<div>${msg} (${time})</div>` + h.innerHTML;
+}
+
+/* ── SDK LOADER ──
+   Monetag SDK কে page load হওয়ার পর
+   dynamically inject করা হচ্ছে।
+   এটাই Telegram WebView এ কাজ করার
+   সঠিক পদ্ধতি।
+*/
+let pollCount = 0;
+
+function pollSDK(){
+  if(typeof window[SDK_FN] === "function"){
+    setStatus("✅ Ad রেডি — এখন Watch করুন!");
+    setBtn(true, "▶ Watch Ad");
+    return;
+  }
+  pollCount++;
+  if(pollCount > 40){
+    setStatus("❌ SDK লোড হয়নি। Retry করুন।");
+    setBtn(true, "🔄 Retry");
+    return;
+  }
+  setTimeout(pollSDK, 500);
+}
+
+function loadSDK(){
+  if(typeof window[SDK_FN] === "function"){
+    pollSDK();
+    return;
+  }
+
+  const s = document.createElement("script");
+  s.src = "https://libtl.com/sdk.js";
+  s.setAttribute("data-zone", ZONE);
+  s.setAttribute("data-sdk",  SDK_FN);
+  s.async = true;
+
+  s.onload  = () => { pollCount = 0; pollSDK(); };
+  s.onerror = () => {
+    setStatus("❌ SDK লোড হয়নি। নেটওয়ার্ক চেক করুন।");
+    setBtn(true, "🔄 Retry");
+  };
+
+  document.head.appendChild(s);
+  setStatus("⏳ Ad SDK লোড হচ্ছে...");
+}
+
+/* ── WATCH AD ── */
+async function watchAd(){
+  if(adBusy) return;
+
+  /* SDK এখনো ready না হলে আবার load করো */
+  if(typeof window[SDK_FN] !== "function"){
+    pollCount = 0;
+    loadSDK();
+    return;
+  }
+
+  adBusy = true;
+  setBtn(false, "⏳ Ad চলছে...");
+  setStatus("📺 Ad দেখানো হচ্ছে...");
+
+  try{
+    await window[SDK_FN]();
+
+    ads++;
+    points++;
+
+    if(ads % 2 === 0){
+      points += 5;
+      setStatus("🎁 Bonus +5 পয়েন্ট!");
+      addHistory("🎁 Bonus +5 Earned");
+    } else {
+      setStatus("✅ +1 Coin পেয়েছেন!");
+      addHistory("✅ +1 Coin Earned");
+    }
+
+    update();
+
+  }catch(err){
+    console.error(err);
+    setStatus("⚠️ Ad skip বা fail হয়েছে।");
+  }finally{
+    adBusy = false;
+    setBtn(true, "▶ Watch Ad");
+  }
+}
+
+/* ── START ── */
+update();
+if(document.readyState === "complete"){
+  loadSDK();
+} else {
+  window.addEventListener("load", loadSDK);
+}
+
+</script>
+</body>
+</html>
