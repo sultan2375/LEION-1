@@ -159,10 +159,9 @@ body::after{
   background:white;
   top:50%;
   left:50%;
-  transform-origin:left;
+  transform-origin:left center;
   border-radius:10px;
 }
-
 .hour{
   width:35%;
   height:5px;
@@ -316,7 +315,7 @@ button:hover{
 
   <div class="display">
 
-    <div class="title">⚡ Ads Open</div>
+    <div class="title">⚡ LEION</div>
 
     <div class="item">
       👤 Name:
@@ -417,9 +416,9 @@ function updateClock(){
   const min = now.getMinutes();
   const hour = now.getHours();
 
-  const secDeg = sec * 6;
-  const minDeg = min * 6;
-  const hourDeg = hour * 30 + min / 2;
+  const secDeg = sec * 6 - 90;
+  const minDeg = min * 6 - 90;
+  const hourDeg = hour * 30 + min / 2 - 90;
 
   document.getElementById("second").style.transform =
     `rotate(${secDeg}deg)`;
@@ -431,6 +430,10 @@ function updateClock(){
     `rotate(${hourDeg}deg)`;
 
 }
+
+setInterval(updateClock,1000);
+
+updateClock();
 
 setInterval(updateClock,1000);
 
