@@ -390,15 +390,19 @@ function watchAd(){
 
       updateDisplay();
 
-    }).catch(()=>{
+      alert("Reward Added ✅");
+
+    }).catch((error)=>{
 
       alert("Ad Failed ❌");
+
+      console.log(error);
 
     });
 
   }else{
 
-    alert("SDK Not Loaded ❌");
+    alert("Monetag SDK Not Loaded ❌");
 
   }
 
