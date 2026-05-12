@@ -10,7 +10,7 @@
 <!-- Telegram -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<title>Self Earn</title>
+<title>Ads Open Premium</title>
 
 <style>
 
@@ -18,179 +18,168 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
 }
 
-/* 🌌 Background */
-body {
+body{
   height:100vh;
+  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family: 'Segoe UI', sans-serif;
+  background:#050816;
   color:white;
-  overflow:hidden;
   position:relative;
-  background:#000;
 }
 
-/* ✅ Your Image Background */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:url('data:image/webp;base64,UklGRu4kAABXRUJQVlA4IOIkAACwJQGdASqQAlgCPm02l0ikIyIhKAgAgA2JaW7hd2EeCWluAAB9H6f4+5S3xC2k7P8n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/T/L+n+X9P8v6f5f0/y/p/l/TA==') center center/cover no-repeat;
-  z-index:-2;
+/* Premium Animated Background */
+.bg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:0;
+  background:
+  radial-gradient(circle at top,#1e3a8a 0%,#020617 50%);
 }
 
-/* Dark overlay */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.45);
-  z-index:-1;
+/* Snake Animation */
+.snake{
+  position:absolute;
+  bottom:40px;
+  left:-200px;
+  width:200px;
+  height:20px;
+  background:linear-gradient(90deg,#22c55e,#4ade80);
+  border-radius:20px;
+  box-shadow:0 0 20px #22c55e;
+  animation:snakeMove 10s linear infinite;
 }
 
-/* ⚡ Canvas */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+@keyframes snakeMove{
+  0%{
+    left:-250px;
+  }
+  100%{
+    left:120%;
+  }
 }
 
-/* 🧊 Card */
-.box {
+/* Horse Animation */
+.horse{
+  position:absolute;
+  bottom:90px;
+  right:-150px;
+  font-size:60px;
+  animation:horseRun 8s linear infinite;
+}
+
+@keyframes horseRun{
+  0%{
+    right:-200px;
+  }
+  100%{
+    right:120%;
+  }
+}
+
+/* Analog Clock */
+.clock{
+  position:absolute;
+  top:20px;
+  width:140px;
+  height:140px;
+  border:6px solid rgba(255,255,255,0.2);
+  border-radius:50%;
+  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,0.05);
+  z-index:5;
+  box-shadow:0 0 30px rgba(255,255,255,0.1);
+}
+
+.hand{
+  position:absolute;
+  width:50%;
+  height:4px;
+  background:white;
+  top:50%;
+  left:50%;
+  transform-origin:left;
+  transform:rotate(90deg);
+  border-radius:10px;
+}
+
+.hour{
+  height:5px;
+  width:35%;
+}
+
+.minute{
+  height:3px;
+  width:45%;
+}
+
+.second{
+  height:2px;
+  width:48%;
+  background:#22c55e;
+}
+
+/* Main Box */
+.box{
   width:360px;
   padding:25px;
-  border-radius:28px;
-  backdrop-filter: blur(10px);
-  background: rgba(0,0,0,0.45);
-  border:2px solid rgba(74,222,128,0.7);
-  text-align:center;
+  border-radius:25px;
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.1);
   z-index:2;
   position:relative;
-  box-shadow:
-    0 0 20px rgba(74,222,128,0.4),
-    0 0 45px rgba(74,222,128,0.2);
+  box-shadow:0 0 40px rgba(0,0,0,0.5);
 }
 
-/* ⚡ Title */
-.box h2{
-  font-size:42px;
-  font-weight:800;
-  letter-spacing:3px;
-  color:white;
-  margin-bottom:15px;
-  text-shadow:0 0 15px #4ade80;
+/* Display */
+.display{
+  background:#020617;
+  border-radius:20px;
+  padding:20px;
+  border:2px solid #22c55e;
+  box-shadow:0 0 15px rgba(34,197,94,0.4);
 }
 
-/* 👤 User */
-#user{
-  font-size:20px;
-  margin-bottom:25px;
-}
-
-/* Stats */
-.stat{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 10px;
-  border-bottom:1px solid rgba(255,255,255,0.1);
+.title{
+  text-align:center;
   font-size:26px;
-  letter-spacing:8px;
+  font-weight:bold;
+  color:#4ade80;
+  margin-bottom:15px;
 }
 
-.stat:last-child{
-  border-bottom:none;
+.item{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  font-size:18px;
 }
 
-.value{
-  color:#39ff6f;
-  font-size:42px;
-  text-shadow:0 0 12px #39ff6f;
-}
-
-/* ⚡ Power Line */
-.power-line {
+/* Button */
+button{
+  width:100%;
+  padding:15px;
   margin-top:20px;
-  height:20px;
-  position:relative;
-}
-
-.line {
-  width:100%;
-  height:4px;
-  background: rgba(255,255,255,0.15);
-  border-radius:10px;
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.energy {
-  width:12px;
-  height:12px;
-  background:#4ade80;
-  border-radius:50%;
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  box-shadow:0 0 18px #4ade80;
-  animation: moveEnergy 2s linear infinite;
-}
-
-@keyframes moveEnergy {
-  0% { left:0%; }
-  100% { left:100%; }
-}
-
-/* 🚀 Button */
-button {
-  width:100%;
-  padding:18px;
-  margin-top:30px;
   border:none;
-  border-radius:16px;
-  background: linear-gradient(90deg,#22c55e,#4ade80);
+  border-radius:15px;
+  background:linear-gradient(90deg,#22c55e,#16a34a);
   color:white;
+  font-size:18px;
   font-weight:bold;
   cursor:pointer;
-  font-size:24px;
-  box-shadow:
-    0 0 20px rgba(74,222,128,0.5),
-    inset 0 0 10px rgba(255,255,255,0.2);
   transition:0.3s;
 }
 
-button:hover {
+button:hover{
   transform:scale(1.03);
-  opacity:0.95;
-}
-
-/* Mobile */
-@media(max-width:450px){
-
-  .box{
-    width:92%;
-    padding:22px;
-  }
-
-  .box h2{
-    font-size:34px;
-  }
-
-  .stat{
-    font-size:22px;
-  }
-
-  .value{
-    font-size:34px;
-  }
-
 }
 
 </style>
@@ -198,184 +187,140 @@ button:hover {
 
 <body>
 
-<canvas id="bg"></canvas>
+<div class="bg"></div>
 
+<!-- Snake -->
+<div class="snake"></div>
+
+<!-- Horse -->
+<div class="horse">🐎</div>
+
+<!-- Clock -->
+<div class="clock">
+  <div class="hand hour" id="hour"></div>
+  <div class="hand minute" id="minute"></div>
+  <div class="hand second" id="second"></div>
+</div>
+
+<!-- Main Card -->
 <div class="box">
 
-  <h2>LEION</h2>
+  <div class="display">
 
-  <p id="user">Checking login...</p>
+    <div class="title">⚡ Ads Open</div>
 
-  <div class="stat">
-    <span>📺 ADS</span>
-    <span class="value" id="ads">0</span>
+    <div class="item">
+      👤 Name:
+      <span id="name">Loading...</span>
+    </div>
+
+    <div class="item">
+      📩 Username:
+      <span id="username">Loading...</span>
+    </div>
+
+    <div class="item">
+      📺 Ads Click:
+      <span id="ads">0</span>
+    </div>
+
+    <div class="item">
+      💰 Points:
+      <span id="points">0</span>
+    </div>
+
   </div>
 
-  <div class="stat">
-    <span>⭐ POINTS</span>
-    <span class="value" id="points">0</span>
-  </div>
-
-  <!-- ⚡ Animation -->
-  <div class="power-line">
-    <div class="line"></div>
-    <div class="energy"></div>
-  </div>
-
-  <button onclick="watchAd()">▶ Watch Ad</button>
+  <button onclick="watchAd()">🚀 Watch Ad</button>
 
 </div>
 
 <script>
 
-// 📺 Ads + Points
-let ads = 0;
-let points = 0;
-
-// ✅ Telegram
+/* Telegram */
 let tg = window.Telegram.WebApp;
 tg.expand();
 
-if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+/* User Info */
+if (tg.initDataUnsafe && tg.initDataUnsafe.user){
 
-  let user = tg.initDataUnsafe.user;
+  document.getElementById("name").innerText =
+    tg.initDataUnsafe.user.first_name;
 
-  document.getElementById("user").innerText =
-    "👤 " + user.first_name;
+  document.getElementById("username").innerText =
+    "@" + (tg.initDataUnsafe.user.username || "NoUsername");
 
-} else {
+}else{
 
-  document.getElementById("user").innerText =
-    "❌ Open from Telegram Bot";
+  document.getElementById("name").innerText = "Telegram Only";
+  document.getElementById("username").innerText = "Not Found";
+
 }
 
-// ✅ Update UI
-function update() {
+/* Ads System */
+let ads = 0;
+let points = 0;
 
+function updateDisplay(){
   document.getElementById("ads").innerText = ads;
   document.getElementById("points").innerText = points;
-
 }
 
-// ✅ Watch Ad
-function watchAd() {
+function watchAd(){
 
-  if (typeof show_10992255 === 'function') {
+  if(typeof show_10992255 === 'function'){
 
-    show_10992255().then(() => {
+    show_10992255().then(()=>{
 
       ads++;
-      points++;
+      points += 10;
 
-      update();
+      updateDisplay();
 
-    }).catch(() => {
+    }).catch(()=>{
 
-      alert("Ad failed ❌");
+      alert("Ad Failed ❌");
 
     });
 
-  } else {
+  }else{
 
-    alert("SDK not loaded ❌");
-
-  }
-
-}
-
-update();
-
-
-// ⚡ Animated Background
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-function resize() {
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-}
-
-resize();
-
-window.addEventListener("resize", resize);
-
-let nodes = [];
-
-for (let i = 0; i < 25; i++) {
-
-  nodes.push({
-
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height
-
-  });
-
-}
-
-function draw() {
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  for (let i = 0; i < nodes.length; i++) {
-
-    for (let j = i + 1; j < nodes.length; j++) {
-
-      let dx = nodes[i].x - nodes[j].x;
-      let dy = nodes[i].y - nodes[j].y;
-
-      let dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 350) {
-
-        ctx.strokeStyle = "rgba(34,197,94,0.15)";
-
-        ctx.beginPath();
-
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-
-        ctx.stroke();
-
-        let progress = (Date.now() % 2000) / 2000;
-
-        let px = nodes[i].x + (nodes[j].x - nodes[i].x) * progress;
-
-        let py = nodes[i].y + (nodes[j].y - nodes[i].y) * progress;
-
-        ctx.fillStyle = "#4ade80";
-
-        ctx.beginPath();
-
-        ctx.arc(px, py, 3, 0, Math.PI * 2);
-
-        ctx.fill();
-
-      }
-
-    }
+    alert("SDK Not Loaded ❌");
 
   }
 
-  nodes.forEach(n => {
+}
 
-    ctx.fillStyle = "#22c55e";
+updateDisplay();
 
-    ctx.beginPath();
+/* Analog Clock */
 
-    ctx.arc(n.x, n.y, 4, 0, Math.PI * 2);
+function updateClock(){
 
-    ctx.fill();
+  const now = new Date();
 
-  });
+  const sec = now.getSeconds();
+  const min = now.getMinutes();
+  const hour = now.getHours();
 
-  requestAnimationFrame(draw);
+  const secDeg = sec * 6;
+  const minDeg = min * 6;
+  const hourDeg = hour * 30 + min / 2;
+
+  document.getElementById("second").style.transform =
+    `rotate(${secDeg}deg)`;
+
+  document.getElementById("minute").style.transform =
+    `rotate(${minDeg}deg)`;
+
+  document.getElementById("hour").style.transform =
+    `rotate(${hourDeg}deg)`;
 
 }
 
-draw();
+setInterval(updateClock,1000);
+
+updateClock();
 
 </script>
 
