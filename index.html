@@ -204,11 +204,11 @@ function update(){
   document.getElementById("bar").style.width = progress + "%";
 }
 
-function watchAd(){
-  if(typeof show_10998524 === 'function'){
+function watchAd() {
+  if (typeof show_10998524 === 'function') {
     show_10998524().then(() => {
       ads++;
-      points += 2;
+      points++;
       update();
     }).catch(() => alert("Ad failed ❌"));
   } else {
